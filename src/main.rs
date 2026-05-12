@@ -1,5 +1,7 @@
 use clap::{Parser, Subcommand};
 
+use crate::io::IOFlags;
+
 mod io;
 
 #[derive(Parser)]
@@ -28,6 +30,12 @@ struct Cli {
 enum Commands { }
 fn main() {
     let cli = Cli::parse();
+
+    let ioflags = IOFlags {
+        stdout: cli.stdout,
+        json: cli.json,
+        only_result: cli.only_result
+    }
     
     let cmd = match cli.command {
         Some(c) => {}
