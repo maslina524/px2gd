@@ -1,5 +1,7 @@
 use clap::{Parser, Subcommand};
 
+mod io;
+
 #[derive(Parser)]
 #[command(name = "px2gd")]
 #[command(about = "A convenient CLI tool for generating raster images in Geometry Dash", long_about = None)]
