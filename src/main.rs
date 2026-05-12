@@ -1,8 +1,10 @@
 use clap::{Parser, Subcommand};
+use std::path::Path;
 
 use crate::io::IOFlags;
 
 mod io;
+mod generate;
 
 #[derive(Parser)]
 #[command(name = "px2gd")]
@@ -26,7 +28,7 @@ struct Cli {
     command: Option<Commands>,
 }
 
-#[derive(Subcommand)]
+#[derive(Subcommand, Debug)]
 enum Commands { }
 fn main() {
     let cli = Cli::parse();
@@ -37,8 +39,10 @@ fn main() {
         only_result: cli.only_result
     };
     
-    let cmd = match cli.command {
-        Some(c) => {}
-        None => {}
+    let cmd: Result<String, String> = {
+        let path = Path::new(&cli.file);
+        generate::run(&path)
     };
+
+    io::print_result(cmd, &ioflags);
 }
