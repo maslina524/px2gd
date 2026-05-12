@@ -13,10 +13,10 @@ struct Cli {
     #[arg(short = 'f', long = "file")]
     file: String,
 
-    #[arg(short = 's')]
+    #[arg(short = 's', long = "stdout")]
     stdout: bool, // Outputs everything to stdout
 
-    #[arg(short = 'j')]
+    #[arg(short = 'j', long = "json")]
     json: bool, // Outputs everything to stdout
 
     #[arg(short = 'r', long = "only-result")]
@@ -35,7 +35,7 @@ fn main() {
         stdout: cli.stdout,
         json: cli.json,
         only_result: cli.only_result
-    }
+    };
     
     let cmd = match cli.command {
         Some(c) => {}
