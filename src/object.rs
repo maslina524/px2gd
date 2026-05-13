@@ -42,15 +42,15 @@ impl ToString for Hsv {
 }
 
 pub struct GameObject {
-    id: u16,
-    x: f64,
-    y: f64,
-    scale_x: f32,
-    scale_y: f32,
-    color_id: u16,
-    hsv: Hsv,
-    layer: usize,
-    z_order: usize
+    pub id: u16,
+    pub x: f64,
+    pub y: f64,
+    pub scale_x: f32,
+    pub scale_y: f32,
+    pub color_id: u16,
+    pub hsv: Hsv,
+    pub layer: usize,
+    pub z_order: usize
 }
 
 impl GameObject {

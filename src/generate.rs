@@ -4,7 +4,7 @@ use bitvec::{bitvec, vec::BitVec};
 
 use crate::object::{GameObject};
 
-pub fn run(file: &Path) -> Result<Vec<GameObject>, Box<dyn std::error::Error>> {
+pub fn run(file: &Path, x_offset: f64, y_offset: f64) -> Result<Vec<GameObject>, Box<dyn std::error::Error>> {
     let dyn_img = ImageReader::open(file)?.decode()?; // open image
     let img: ImageBuffer<Rgba<u8>, Vec<u8>> = dyn_img.to_rgba8();
     let (w, h) = (img.width(), img.height());
@@ -37,7 +37,7 @@ pub fn run(file: &Path) -> Result<Vec<GameObject>, Box<dyn std::error::Error>> {
                                 temp_layer.set(base + xx, true);
                             }
                         }
-                        let obj = GameObject::from_pixel(
+                        let mut obj = GameObject::from_pixel(
                             x as u32, 
                             y as u32, 
                             scale_x, 
@@ -46,6 +46,8 @@ pub fn run(file: &Path) -> Result<Vec<GameObject>, Box<dyn std::error::Error>> {
                             color_idx, 
                             scale_multi
                         );
+                        obj.x += x_offset;
+                        obj.y += y_offset;
                         objects.push(obj);
                     }
                 }

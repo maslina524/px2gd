@@ -19,11 +19,17 @@ struct Cli {
     #[arg(short = 't', long = "target")]
     target: String,
 
+    #[arg(short = 'x', long = "x-pos", default_value_t = 0.0)]
+    x: f64,
+
+    #[arg(short = 'y', long = "y-pos", default_value_t = 0.0)]
+    y: f64,
+
     #[arg(short = 's', long = "stdout")]
     stdout: bool, // Outputs everything to stdout
 
     #[arg(short = 'j', long = "json")]
-    json: bool, // Outputs everything to stdout
+    json: bool, // Formats the output as json
 
     #[arg(short = 'r', long = "only-result")]
     only_result: bool, // Outputs only the result of execution
@@ -63,7 +69,7 @@ fn main() {
     
     let cmd = {
         let path = Path::new(&cli.file);
-        generate::run(&path)
+        generate::run(&path, cli.x, cli.y)
     };
 
     let ret: Result<String, String> = match target {
