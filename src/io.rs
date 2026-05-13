@@ -4,7 +4,6 @@ use serde_json::json;
 pub struct IOFlags {
     pub stdout: bool,
     pub json: bool,
-    pub only_result: bool
 }
 
 pub fn print_result<T, E>(result: Result<T, E>, flags: &IOFlags)

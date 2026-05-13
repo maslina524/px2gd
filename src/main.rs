@@ -37,9 +37,6 @@ struct Cli {
     #[arg(short = 'j', long = "json")]
     json: bool, // Formats the output as json
 
-    #[arg(short = 'r', long = "only-result")]
-    only_result: bool, // Outputs only the result of execution
-
     #[command(subcommand)]
     command: Option<Commands>,
 }
@@ -60,7 +57,6 @@ fn main() {
     let ioflags = IOFlags {
         stdout: cli.stdout,
         json: cli.json,
-        only_result: cli.only_result
     };
 
     let target = match cli.target.as_str() {
