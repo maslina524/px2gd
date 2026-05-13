@@ -1,5 +1,5 @@
 use clap::{Parser, Subcommand};
-use std::{error::Error, path::Path};
+use std::path::Path;
 
 use crate::io::IOFlags;
 
