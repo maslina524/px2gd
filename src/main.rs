@@ -5,6 +5,7 @@ use crate::io::IOFlags;
 
 mod io;
 mod generate;
+mod object;
 
 #[derive(Parser)]
 #[command(name = "px2gd")]
@@ -39,7 +40,7 @@ fn main() {
         only_result: cli.only_result
     };
     
-    let cmd: Result<String, String> = {
+    let cmd = {
         let path = Path::new(&cli.file);
         generate::run(&path)
     };
