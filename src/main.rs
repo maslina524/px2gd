@@ -1,5 +1,5 @@
 use clap::{Parser, Subcommand};
-use std::path::Path;
+use std::{error::Error, path::Path};
 
 use crate::io::IOFlags;
 
@@ -16,6 +16,9 @@ struct Cli {
     #[arg(short = 'f', long = "file")]
     file: String,
 
+    #[arg(short = 't', long = "target")]
+    target: String,
+
     #[arg(short = 's', long = "stdout")]
     stdout: bool, // Outputs everything to stdout
 
@@ -31,6 +34,14 @@ struct Cli {
 
 #[derive(Subcommand, Debug)]
 enum Commands { }
+
+#[derive(Debug, PartialEq)]
+enum Target {
+    ObjectString,
+    LiveEditor,
+    GameSave
+}
+
 fn main() {
     let cli = Cli::parse();
 
@@ -39,11 +50,37 @@ fn main() {
         json: cli.json,
         only_result: cli.only_result
     };
+
+    let target = match cli.target.as_str() {
+        "string" | "str" => Target::ObjectString,
+        "live" | "ws" => Target::LiveEditor,
+        "save" | "gamesave" => Target::GameSave,
+        _ => {
+            io::print_result(Result::<&str, &str>::Err("Invalid value in --target"), &ioflags);
+            std::process::exit(1);
+        }
+    };
     
     let cmd = {
         let path = Path::new(&cli.file);
         generate::run(&path)
     };
 
-    io::print_result(cmd, &ioflags);
+    let ret: Result<String, String> = match target {
+        Target::ObjectString => {
+            cmd.map(
+                |v| v.iter().map(
+                    |s| s.to_string()
+                ).collect::<String>()
+            )
+            .map_err(|e| e.to_string())
+        },
+        _ => {
+            Err("Other options for --target are not yet available.".to_string())
+        }
+    };
+
+    io::print_result(ret, &ioflags);
+
+    
 }
