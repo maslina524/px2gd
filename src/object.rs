@@ -1,3 +1,11 @@
+pub struct Hsv {
+    h: f32,
+    s: f32,
+    v: f32,
+    s_checked: bool,
+    v_checked: bool,
+}
+
 pub struct GameObject {
     x: f64,
     y: f64,
