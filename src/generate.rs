@@ -4,7 +4,7 @@ use bitvec::{bitvec, vec::BitVec};
 
 use crate::object::{GameObject};
 
-pub fn run(file: &Path) -> Result<String, Box<dyn std::error::Error>> {
+pub fn run(file: &Path) -> Result<Vec<GameObject>, Box<dyn std::error::Error>> {
     let dyn_img = ImageReader::open(file)?.decode()?; // open image
     let img: ImageBuffer<Rgba<u8>, Vec<u8>> = dyn_img.to_rgba8();
     let (w, h) = (img.width(), img.height());
@@ -66,7 +66,7 @@ pub fn run(file: &Path) -> Result<String, Box<dyn std::error::Error>> {
         }
     }
     
-    Ok(String::new())
+    Ok(objects)
 }
 
 fn quantize_rgba(pixel: [u8; 4], step: u8) -> [u8; 4] {
