@@ -36,7 +36,7 @@ impl ToString for Hsv {
         format!(
             "{}a{}a{}a{}a{}",
             self.h, self.s, self.v,
-            self.s_checked, self.v_checked
+            self.s_checked as u8, self.v_checked as u8
         )
     }
 }
