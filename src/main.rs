@@ -25,6 +25,9 @@ struct Cli {
     #[arg(short = 'y', long = "y-pos", default_value_t = 0.0)]
     y: f64,
 
+    #[arg(short = 'S', long = "scale", default_value_t = 1.0)]
+    scale: f32,
+
     #[arg(short = 's', long = "stdout")]
     stdout: bool, // Outputs everything to stdout
 
@@ -69,7 +72,7 @@ fn main() {
     
     let cmd = {
         let path = Path::new(&cli.file);
-        generate::run(&path, cli.x, cli.y)
+        generate::run(&path, cli.x, cli.y, cli.scale)
     };
 
     let ret: Result<String, String> = match target {
