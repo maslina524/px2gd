@@ -54,13 +54,16 @@ pub struct GameObject {
 }
 
 impl GameObject {
-    pub fn from_pixel(x: u32, y: u32, scale_x: u32, scale_y: u32, color: [u8; 3], color_idx: usize, scale_multi: f32) -> Self {
+    pub fn from_pixel(x: u32, y: u32, size_x: u32, size_y: u32, color: [u8; 3], color_idx: usize, scale_multi: f32) -> Self {
+        let x_pos = (x as f64 + size_x as f64 / 2.0) * 30.0;
+        let y_pos = (y as f64 + size_y as f64 / 2.0) * 30.0;
+
         Self {
             id: 211,
-            x: (x as f64 + (scale_x - 1) as f64 / 2.) * 30. * scale_multi as f64,
-            y: (0. - y as f64 - (scale_y - 1) as f64 / 2.) * 30. * scale_multi as f64,
-            scale_x: scale_x as f32 * scale_multi,
-            scale_y: scale_y as f32 * scale_multi,
+            x: x_pos * scale_multi as f64,
+            y: -y_pos * scale_multi as f64,
+            scale_x: size_x as f32 * scale_multi,
+            scale_y: size_y as f32 * scale_multi,
             color_id: 1011,
             hsv: Hsv::rgb_to_hsv(color),
             layer: color_idx,
