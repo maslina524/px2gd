@@ -68,3 +68,23 @@ impl GameObject {
         }
     }
 }
+
+impl ToString for GameObject {
+    fn to_string(&self) -> String {
+        let mut parts = Vec::with_capacity(9);
+
+        parts.push(format!("1,{}", self.id));
+        parts.push(format!("2,{}", self.x));
+        parts.push(format!("3,{}", self.y));
+        parts.push(format!("128,{}", self.scale_x));
+        parts.push(format!("129,{}", self.scale_y));
+        parts.push(format!("21,{}", self.color_id));
+        parts.push(format!("41,1,43,{}", self.hsv.to_string()));
+        parts.push(format!("20,{}", self.layer));
+        parts.push(format!("25,{}", self.z_order));
+
+        let mut ret = parts.join(",");
+        ret.push(';');
+        ret
+    }
+}
