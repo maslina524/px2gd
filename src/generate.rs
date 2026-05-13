@@ -4,13 +4,19 @@ use bitvec::{bitvec, vec::BitVec};
 
 use crate::object::{GameObject};
 
-pub fn run(file: &Path, x_offset: f64, y_offset: f64, scale_multi: f32) -> Result<Vec<GameObject>, Box<dyn std::error::Error>> {
+pub fn run(file: &Path, x_offset: f64, y_offset: f64, scale_multi: f32, const_scale: Option<f32>) -> Result<Vec<GameObject>, Box<dyn std::error::Error>> {
     let dyn_img = ImageReader::open(file)?.decode()?; // open image
     let img: ImageBuffer<Rgba<u8>, Vec<u8>> = dyn_img.to_rgba8();
     let (w, h) = (img.width(), img.height());
     let total_pixels = w * h;
 
     let step = 1;
+    let scale_multi = if let Some(scale) = const_scale {
+        let max = w.max(h);
+        (scale / 30.0) / max as f32
+    } else {
+        scale_multi
+    };
 
     let mut occupied = bitvec![0; total_pixels as usize];
     let colors = get_color_frequency(&img, step, w, h, &mut occupied); 

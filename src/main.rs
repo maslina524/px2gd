@@ -28,6 +28,9 @@ struct Cli {
     #[arg(short = 'S', long = "scale", default_value_t = 1.0)]
     scale: f32,
 
+    #[arg(short = 'c', long = "const-scale")]
+    const_scale: Option<f32>,
+
     #[arg(short = 's', long = "stdout")]
     stdout: bool, // Outputs everything to stdout
 
@@ -72,7 +75,7 @@ fn main() {
     
     let cmd = {
         let path = Path::new(&cli.file);
-        generate::run(&path, cli.x, cli.y, cli.scale)
+        generate::run(&path, cli.x, cli.y, cli.scale, cli.const_scale)
     };
 
     let ret: Result<String, String> = match target {
