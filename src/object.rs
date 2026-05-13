@@ -31,6 +31,16 @@ impl Hsv {
     }
 }
 
+impl ToString for Hsv {
+    fn to_string(&self) -> String {
+        format!(
+            "{}a{}a{}a{}a{}",
+            self.h, self.s, self.v,
+            self.s_checked, self.v_checked
+        )
+    }
+}
+
 pub struct GameObject {
     id: u16,
     x: f64,
