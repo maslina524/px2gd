@@ -9,7 +9,7 @@ if (-not (Test-Path $install_folder)) {
 
 if (-not (Test-Path $install_path)) {
     try {
-        Invoke-WebRequest -Uri "https://github.com/maslina524/px2gd/releases/download/1.0.0/px2gd.exe" -OutFile $install_path
+        Invoke-WebRequest -Uri "https://github.com/maslina524/px2gd/releases/download/1.0.1/px2gd.exe" -OutFile $install_path
     }
     catch {
         Write-Host "Download error: $($_.Exception.Message)" -ForegroundColor Red
