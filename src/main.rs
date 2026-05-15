@@ -31,6 +31,9 @@ struct Cli {
     #[arg(short = 't', long = "step", default_value_t = 1)]
     step: u8,
 
+    #[arg(short = 'O', long = "no-opt")]
+    no_opt: bool, // no_optimization
+
     #[arg(short = 'c', long = "const-scale")]
     const_scale: Option<f32>,
 
@@ -74,7 +77,7 @@ fn main() {
     
     let cmd = {
         let path = Path::new(&cli.file);
-        generate::run(&path, cli.x, cli.y, cli.scale, cli.const_scale, cli.step)
+        generate::run(&path, cli.x, cli.y, cli.scale, cli.const_scale, cli.step, cli.no_opt)
     };
 
     let ret: Result<String, String> = match target {
